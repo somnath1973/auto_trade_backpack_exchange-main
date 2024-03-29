@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const backpack_client_1 = require("./backpack_client");
 
 /// EDIT HERE ///
-const API_KEY = "IUiXjx+DCon2KZJ/xxxxxxxxxxxxxxxxxxxxx+A="
-const API_SECRET = "mHByUM48jVUGxxxxxxxxxxxxxxxxxxxxxxxx="
+const API_KEY = "VC2jGOXfxxxxxxxxxxxxxxxxxxxx="
+const API_SECRET = "EaIvdhigkxxxxxxxxxxxxxxxx="
 /////////////
 
 function delay(ms) {
@@ -86,8 +86,8 @@ const sellfun = async (client) => {
     console.log(getNowFormatDate(), `My Account Infos: ${userbalance2.SOL.available} $SOL | ${userbalance2.USDC.available} $USDC`, );
     
     let { lastPrice: lastPriceask } = await client.Ticker({ symbol: "SOL_USDC" });
-    console.log(getNowFormatDate(), "Price SOL_USDC:", lastPriceask);
-    let quantitys = (userbalance2.SOL.available - (userbalance2.SOL.available * 0.02)).toFixed(0).toString();
+    console.log(getNowFormatDate(), "Price sol_usdc:", lastPriceask);
+    let quantitys = (userbalance2.SOL.available - 0.02).toFixed(2).toString();
     console.log(getNowFormatDate(), `Trade... ${quantitys} $SOL to ${(lastPriceask * quantitys).toFixed(2)} $USDC`);
     let orderResultAsk = await client.ExecuteOrder({
         orderType: "Limit",
@@ -124,8 +124,8 @@ const buyfun = async (client) => {
     }
     console.log(getNowFormatDate(), `My Account Infos: ${balanceSol} $SOL | ${userbalance.USDC.available} $USDC`, );
     let { lastPrice } = await client.Ticker({ symbol: "SOL_USDC" });
-    console.log(getNowFormatDate(), "Price of SOL_USDC:", lastPrice);
-    let quantitys = ((userbalance.USDC.available - 2) / lastPrice).toFixed(0).toString();
+    console.log(getNowFormatDate(), "Price of sol_usdc:", lastPrice);
+    let quantitys = ((userbalance.USDC.available - 2) / lastPrice).toFixed(2).toString();
     console.log(getNowFormatDate(), `Trade ... ${(userbalance.USDC.available - 2).toFixed(2).toString()} $USDC to ${quantitys} $SOL`);
     let orderResultBid = await client.ExecuteOrder({
         orderType: "Limit",
