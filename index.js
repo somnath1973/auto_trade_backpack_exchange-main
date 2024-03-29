@@ -76,25 +76,25 @@ const init = async (client) => {
 
 
 const sellfun = async (client) => {
-    let GetOpenOrders = await client.GetOpenOrders({ symbol: "WEN_USDC" });
+    let GetOpenOrders = await client.GetOpenOrders({ symbol: "SOL_USDC" });
     if (GetOpenOrders.length > 0) {
-        let CancelOpenOrders = await client.CancelOpenOrders({ symbol: "WEN_USDC" });
+        let CancelOpenOrders = await client.CancelOpenOrders({ symbol: "SOL_USDC" });
         console.log(getNowFormatDate(), "All pending orders canceled");
     }
 
     let userbalance2 = await client.Balance();
-    console.log(getNowFormatDate(), `My Account Infos: ${userbalance2.WEN.available} $WEN | ${userbalance2.USDC.available} $USDC`, );
+    console.log(getNowFormatDate(), `My Account Infos: ${userbalance2.SOL.available} $SOL | ${userbalance2.USDC.available} $USDC`, );
     
-    let { lastPrice: lastPriceask } = await client.Ticker({ symbol: "WEN_USDC" });
-    console.log(getNowFormatDate(), "Price WEN_USDC:", lastPriceask);
-    let quantitys = (userbalance2.WEN.available - (userbalance2.WEN.available * 0.02)).toFixed(0).toString();
-    console.log(getNowFormatDate(), `Trade... ${quantitys} $WEN to ${(lastPriceask * quantitys).toFixed(2)} $USDC`);
+    let { lastPrice: lastPriceask } = await client.Ticker({ symbol: "SOL_USDC" });
+    console.log(getNowFormatDate(), "Price SOL_USDC:", lastPriceask);
+    let quantitys = (userbalance2.SOL.available - (userbalance2.SOL.available * 0.02)).toFixed(0).toString();
+    console.log(getNowFormatDate(), `Trade... ${quantitys} $SOL to ${(lastPriceask * quantitys).toFixed(2)} $USDC`);
     let orderResultAsk = await client.ExecuteOrder({
         orderType: "Limit",
         price: lastPriceask.toString(),
         quantity: quantitys,
         side: "Ask",
-        symbol: "WEN_USDC",
+        symbol: "SOL_USDC",
         timeInForce: "IOC"
     })
     if (orderResultAsk?.status == "Filled" && orderResultAsk?.side == "Ask") {
@@ -112,27 +112,27 @@ const sellfun = async (client) => {
 }
 
 const buyfun = async (client) => {
-    let GetOpenOrders = await client.GetOpenOrders({ symbol: "WEN_USDC" });
+    let GetOpenOrders = await client.GetOpenOrders({ symbol: "SOL_USDC" });
     if (GetOpenOrders.length > 0) {
-        let CancelOpenOrders = await client.CancelOpenOrders({ symbol: "WEN_USDC" });
+        let CancelOpenOrders = await client.CancelOpenOrders({ symbol: "SOL_USDC" });
         console.log(getNowFormatDate(), "All pending orders canceled");
     }
     let userbalance = await client.Balance();
     let balanceSol = 0;
-    if (userbalance.WEN) {
-        balanceSol = userbalance.WEN.available
+    if (userbalance.SOL) {
+        balanceSol = userbalance.SOL.available
     }
-    console.log(getNowFormatDate(), `My Account Infos: ${balanceSol} $WEN | ${userbalance.USDC.available} $USDC`, );
-    let { lastPrice } = await client.Ticker({ symbol: "WEN_USDC" });
-    console.log(getNowFormatDate(), "Price of WEN_USDC:", lastPrice);
+    console.log(getNowFormatDate(), `My Account Infos: ${balanceSol} $SOL | ${userbalance.USDC.available} $USDC`, );
+    let { lastPrice } = await client.Ticker({ symbol: "SOL_USDC" });
+    console.log(getNowFormatDate(), "Price of SOL_USDC:", lastPrice);
     let quantitys = ((userbalance.USDC.available - 2) / lastPrice).toFixed(0).toString();
-    console.log(getNowFormatDate(), `Trade ... ${(userbalance.USDC.available - 2).toFixed(2).toString()} $USDC to ${quantitys} $WEN`);
+    console.log(getNowFormatDate(), `Trade ... ${(userbalance.USDC.available - 2).toFixed(2).toString()} $USDC to ${quantitys} $SOL`);
     let orderResultBid = await client.ExecuteOrder({
         orderType: "Limit",
         price: lastPrice.toString(),
         quantity: quantitys,
         side: "Bid",
-        symbol: "WEN_USDC",
+        symbol: "SOL_USDC",
         timeInForce: "IOC"
     })
     if (orderResultBid?.status == "Filled" && orderResultBid?.side == "Bid") {
